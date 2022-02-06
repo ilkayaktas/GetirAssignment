@@ -1,0 +1,21 @@
+
+spring:
+  datasource:
+    url: jdbc:mysql://${MYSQL_IP}:3306/readingisgood-getir?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+  data:
+    rest:
+      base-path: /api
+
+logging:
+  level:
+    root: INFO
+  file:
+    name: log/app.log

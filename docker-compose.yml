@@ -1,0 +1,37 @@
+version: '3.1'
+
+services:
+  db:
+    container_name: mysql
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=bayzat --execute \"SHOW DATABASES;\""
+      interval: 2s
+      timeout: 20s
+      retries: 10
+    environment:
+      MYSQL_ROOT_PASSWORD: bayzat
+    networks:
+      - getir-network
+    ports:
+      - 3306:3306
+  readingisgood-getir:
+    container_name: readingisgood-getir
+    image: ilkayaktas/readingisgood-getir
+    restart: unless-stopped
+    networks:
+      - getir-network
+    environment:
+      MYSQL_IP: mysql
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 8080:8080
+
+networks:
+  getir-network:
+    name: getir-network
+    driver: bridge
