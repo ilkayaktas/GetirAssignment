@@ -17,6 +17,6 @@ public interface CustomerMapper {
     @Mapping(source = "hashedPassword", target = "password")
     RestCustomer toRestCustomer(Customer customer);
 
-    @Mapping(source = "password", target = "hashedPassword")
+    @Mapping(expression = "java(new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder().encode(restCustomer.getPassword()))", target = "hashedPassword")
     Customer toCustomer(RestCustomer restCustomer);
 }
