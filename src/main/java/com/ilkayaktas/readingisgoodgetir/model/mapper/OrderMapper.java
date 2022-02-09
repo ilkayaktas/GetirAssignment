@@ -16,7 +16,7 @@ public interface OrderMapper {
 
     @Mapping(target = "time", expression = "java(order.getOrderTime().getEpochSecond())")
     @Mapping(target = "customerId", source = "customer.id")
-    RestOrder toOrderCustomer(Order order);
+    RestOrder toRestOrder(Order order);
 
     @Mapping(target = "orderTime", expression = "java(java.time.Instant.ofEpochSecond(restOrder.getTime()))")
     @Mapping(target = "customer", expression = "java(Customer.builder().id(restOrder.getCustomerId()).build())")
