@@ -17,7 +17,7 @@ import java.util.List;
 @Validated
 public class OrderController {
     @PostMapping("/add")
-    public ResponseEntity<RestOrder> addOrder(@RequestBody @Valid RestOrder restOrder){
+    public ResponseEntity<RestOrder> createOrder(@RequestBody @Valid RestOrder restOrder){
         return null;
     }
 

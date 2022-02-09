@@ -4,6 +4,7 @@ import com.ilkayaktas.readingisgoodgetir.model.db.Customer;
 import com.ilkayaktas.readingisgoodgetir.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,11 +25,13 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
+    @Transactional
     public Customer addCustomer(Customer customer) {
         return customerRepository.save(customer);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Customer> getAllCustomers() {
         Iterable<Customer> all = customerRepository.findAll();
 
@@ -41,6 +44,7 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Customer findByUsername(String username) {
         return customerRepository.findByUsername(username).orElse(null);
     }

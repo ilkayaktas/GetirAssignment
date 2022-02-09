@@ -6,7 +6,7 @@ package com.ilkayaktas.readingisgoodgetir.model.db;
 
 public enum OrderStatus {
    CANCELLED(0),
-   ON_GOING(1),
+   NEW(1),
    COMPLETED(2);
 
    public int status;

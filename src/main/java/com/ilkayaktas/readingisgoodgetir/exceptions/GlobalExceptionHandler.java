@@ -23,9 +23,9 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler
   public ResponseEntity<AbstractMap.SimpleEntry<String, String>> handle(Exception exception) {
-    LOG.error("Request could not be processed: ", exception);
+    LOG.error("Request could not be processed but exception is handled by ReadingIsGood-Getir: ", exception);
     AbstractMap.SimpleEntry<String, String> response =
-        new AbstractMap.SimpleEntry<>("message", "Request could not be processed");
+        new AbstractMap.SimpleEntry<>("message", "Request could not be processed!");
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
   }
 

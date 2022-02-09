@@ -14,3 +14,5 @@ You will see a **build.sh** file. It's intentionally created by me. When you run
 
 In addition, i have created a docker compose file. When you run `docker-compose up` command, mysql and readingisgood-getir are run. readingisgood-getir waits until mysql gets ready.
 
+### Stock
+Stock can be updated via rest using negative or positive integer. Negative means that remove book from stock, positive means that add book to stock.
