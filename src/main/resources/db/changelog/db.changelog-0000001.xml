@@ -29,6 +29,14 @@
             <column name="author" type="VARCHAR(255)"/>
             <column name="stockCount" type="INT"/>
         </createTable>
+        <createTable tableName="orderitem">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="pk_orderitem"/>
+            </column>
+            <column name="orderId" type="BIGINT"/>
+            <column name="bookId" type="BIGINT"/>
+            <column name="count" type="INT"/>
+        </createTable>
         <addForeignKeyConstraint baseColumnNames="customer_id"
              baseTableName="order"
              constraintName="fk_customer_order_id"
@@ -44,6 +52,20 @@
                 columnNames="email"
                 constraintName="unique-email"
                 tableName="customer"/>
+        <addForeignKeyConstraint baseColumnNames="orderId"
+                 baseTableName="orderitem"
+                 constraintName="fk_orderitem_order_id"
+                 onDelete="CASCADE"
+                 onUpdate="RESTRICT"
+                 referencedColumnNames="id"
+                 referencedTableName="order"/>
+        <addForeignKeyConstraint baseColumnNames="bookId"
+                 baseTableName="orderitem"
+                 constraintName="fk_orderitem_book_id"
+                 onDelete="CASCADE"
+                 onUpdate="RESTRICT"
+                 referencedColumnNames="id"
+                 referencedTableName="book"/>
 
     </changeSet>
     <changeSet  author="ilkayaktas"  id="insert-admin">

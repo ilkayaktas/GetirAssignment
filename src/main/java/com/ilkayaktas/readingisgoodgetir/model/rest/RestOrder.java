@@ -1,7 +1,10 @@
 package com.ilkayaktas.readingisgoodgetir.model.rest;
 
+import com.ilkayaktas.readingisgoodgetir.model.validator.OrderCountCriteria;
 import lombok.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -20,5 +23,19 @@ public class RestOrder {
     private Long customerId;
     @NotNull(message = "Order status can't be null!")
     private Integer status;
-    private List<Integer> items;
+    @NotNull(message = "Order list can't be null!")
+    @NotEmpty(message = "Order list can't be empty")
+    @Valid
+    private List<RestOrderItem> items;
+}
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
+class RestOrderItem {
+    Long itemId;
+    @OrderCountCriteria(message = "Order count must be greater than zero!")
+    Integer itemCount;
 }

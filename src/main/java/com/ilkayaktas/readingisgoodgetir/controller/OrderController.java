@@ -11,7 +11,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by ilkayaktas on 6.02.2022 at 00:20.
@@ -49,7 +51,19 @@ public class OrderController {
 
     @GetMapping("/get/{startdate}/{enddate}")
     public ResponseEntity<List<RestOrder>> getOrderByDate(@PathVariable("startdate") String startdate, @PathVariable("enddate") String enddate){
-        return null;
+        if (startdate.isBlank())return new ResponseEntity("Start day can't be blank.", HttpStatus.BAD_REQUEST);
+        if (enddate.isBlank())return new ResponseEntity("End day can't be blank.", HttpStatus.BAD_REQUEST);
+
+        try {
+            Long startEpocTime = Long.parseLong(startdate);
+            Long endEpocTime = Long.parseLong(enddate);
+
+            List<Order> ordersByDate = orderService.getOrdersByDate(Instant.ofEpochSecond(startEpocTime), Instant.ofEpochSecond(endEpocTime));
+            List<RestOrder> orders = ordersByDate.stream().map(OrderMapper.INSTANCE::toRestOrder).collect(Collectors.toList());
+            return ResponseEntity.ok(orders);
+        } catch (NumberFormatException e){
+            return new ResponseEntity("Start date and end date is not valid! They should be valid epoc time.",HttpStatus.BAD_REQUEST);
+        }
     }
 
 

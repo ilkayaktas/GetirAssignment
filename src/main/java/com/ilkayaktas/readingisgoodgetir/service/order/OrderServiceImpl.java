@@ -47,6 +47,7 @@ public class OrderServiceImpl implements OrderService{
     @Override
     @Transactional(readOnly = true)
     public List<Order> getOrdersByDate(Instant startDate, Instant endDate) {
-        return null;
+        Optional<List<Order>> orderByDate = orderRepository.findOrderByDate(startDate, endDate);
+        return orderByDate.orElse(List.of());
     }
 }
