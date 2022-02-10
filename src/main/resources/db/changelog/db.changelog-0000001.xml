@@ -20,6 +20,7 @@
             <column name="customer_id" type="BIGINT"/>
             <column name="order_time" type="TIMESTAMP"/>
             <column name="status" type="INT"/>
+            <column name="totalPrice" type="double"/>
         </createTable>
         <createTable tableName="book">
             <column autoIncrement="true" name="id" type="BIGINT">
@@ -28,6 +29,7 @@
             <column name="name" type="VARCHAR(255)"/>
             <column name="author" type="VARCHAR(255)"/>
             <column name="stockCount" type="INT"/>
+            <column name="price" type="double"/>
         </createTable>
         <createTable tableName="orderitem">
             <column autoIncrement="true" name="id" type="BIGINT">

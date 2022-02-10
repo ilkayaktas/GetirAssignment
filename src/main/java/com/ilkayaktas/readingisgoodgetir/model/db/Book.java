@@ -31,6 +31,9 @@ public class Book {
     @Column(name = "stockCount")
     Integer stockCount;
 
+    @Column(name = "price")
+    Double price;
+
     @Override
     public int hashCode() {
         final int prime = 31;

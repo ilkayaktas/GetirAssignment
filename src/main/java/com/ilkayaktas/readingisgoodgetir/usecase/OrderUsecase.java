@@ -2,6 +2,7 @@ package com.ilkayaktas.readingisgoodgetir.usecase;
 
 import com.ilkayaktas.readingisgoodgetir.exceptions.StockException;
 import com.ilkayaktas.readingisgoodgetir.model.db.Book;
+import com.ilkayaktas.readingisgoodgetir.model.db.MonthlyOrderStatistics;
 import com.ilkayaktas.readingisgoodgetir.model.db.Order;
 import com.ilkayaktas.readingisgoodgetir.model.db.OrderItem;
 import com.ilkayaktas.readingisgoodgetir.service.book.BookService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 /**
@@ -32,20 +34,27 @@ public class OrderUsecase {
 
     public Order createOrder(Order order) throws StockException {
         // validate book stock count
-        validateBookStock(order.getOrderItems());
+        Double totalPrice = validateBookStock(order.getOrderItems());
 
+        order.setTotalPrice(totalPrice);
         // save order
         Order orderResult = orderService.saveOrder(order);
 
         return orderResult;
     }
 
-    private void validateBookStock(List<OrderItem>itemList) throws StockException {
+    private Double validateBookStock(List<OrderItem>itemList) throws StockException {
+
+        AtomicReference<Double> totalPrice = new AtomicReference<>(0.0);
+
         List<Book> collect = itemList.stream()
                 .map(orderItem -> {
                     // get books and update stock.
                     Book book = bookService.getBook(orderItem.getBookId());
                     book.setStockCount(book.getStockCount() - orderItem.getCount());
+
+                    // calculate total price of order
+                    totalPrice.set(totalPrice.get() + (book.getPrice() * orderItem.getCount()));
                     return book;
                 })
                 .filter(book -> {
@@ -63,5 +72,11 @@ public class OrderUsecase {
             throw new StockException(reduce.orElse("Some")+" stock is not enough for order!");
         }
 
+        return totalPrice.get();
+
+    }
+
+    public List<MonthlyOrderStatistics> getMontlyOrderStatistics(Long customerId){
+        return null;
     }
 }

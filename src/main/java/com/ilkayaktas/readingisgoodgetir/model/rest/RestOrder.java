@@ -26,5 +26,6 @@ public class RestOrder {
     @NotEmpty(message = "Order list can't be empty")
     @Valid
     private List<RestOrderItem> items;
+    Double totalPrice;
 }
 

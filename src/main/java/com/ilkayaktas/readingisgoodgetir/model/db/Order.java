@@ -34,6 +34,10 @@ public class Order {
     @Column(name = "status")
     Integer status;
 
+    @NotNull
+    @Column(name = "totalPrice")
+    Double totalPrice;
+
     @OneToOne
     @NotNull
     @JoinColumn(name = "customer_id", referencedColumnName = "id")

@@ -1,5 +1,6 @@
 package com.ilkayaktas.readingisgoodgetir.model.rest;
 
+import com.ilkayaktas.readingisgoodgetir.model.validator.PriceCriteria;
 import com.ilkayaktas.readingisgoodgetir.model.validator.StockCountCriteria;
 import lombok.*;
 
@@ -21,4 +22,6 @@ public class RestBook {
     private String author;
     @StockCountCriteria(message = "Stock count can't be negative value!")
     private Integer stockCount;
+    @PriceCriteria(message = "Price can't be lower than zero.")
+    Double price;
 }
