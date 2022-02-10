@@ -1,5 +1,6 @@
 package com.ilkayaktas.readingisgoodgetir.service.order;
 
+import com.ilkayaktas.readingisgoodgetir.model.db.MonthlyOrderStatistics;
 import com.ilkayaktas.readingisgoodgetir.model.db.Order;
 
 import java.time.Instant;
@@ -17,4 +18,6 @@ public interface OrderService {
     Order getOrder(Long orderId);
 
     List<Order> getOrdersByDate(Instant startDate, Instant endDate);
+
+    List<MonthlyOrderStatistics> getMonthlyStatistics(Long customerId);
 }

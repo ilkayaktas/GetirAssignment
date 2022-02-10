@@ -77,6 +77,6 @@ public class OrderUsecase {
     }
 
     public List<MonthlyOrderStatistics> getMontlyOrderStatistics(Long customerId){
-        return null;
+        return orderService.getMonthlyStatistics(customerId);
     }
 }

@@ -1,8 +1,9 @@
 package com.ilkayaktas.readingisgoodgetir.controller;
 
-import com.ilkayaktas.readingisgoodgetir.model.rest.RestStatistics;
+import com.ilkayaktas.readingisgoodgetir.model.db.MonthlyOrderStatistics;
 import com.ilkayaktas.readingisgoodgetir.usecase.OrderUsecase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +25,21 @@ public class StatisticsController {
     OrderUsecase orderUsecase;
 
     @GetMapping("/monthly/{customerId}")
-    public ResponseEntity<List<RestStatistics>> getStatistics(@PathVariable("customerId") String customerId){
-        return null;
+    public ResponseEntity<List<MonthlyOrderStatistics>> getStatistics(@PathVariable("customerId") String customerId){
+        if (customerId == null || customerId.isBlank())return new ResponseEntity("Customer Id can't be blank.", HttpStatus.BAD_REQUEST);
+
+        Long customerIdConverted;
+        try{
+            customerIdConverted = Long.parseLong(customerId);
+        } catch (NumberFormatException e){
+            return new ResponseEntity("Order id is not valid!",HttpStatus.BAD_REQUEST);
+        }
+        List<MonthlyOrderStatistics> montlyOrderStatistics = orderUsecase.getMontlyOrderStatistics(customerIdConverted);
+        if (montlyOrderStatistics == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok(montlyOrderStatistics);
     }
 
 }

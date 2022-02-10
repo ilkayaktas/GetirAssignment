@@ -1,7 +1,7 @@
 package com.ilkayaktas.readingisgoodgetir.service.order;
 
+import com.ilkayaktas.readingisgoodgetir.model.db.MonthlyOrderStatistics;
 import com.ilkayaktas.readingisgoodgetir.model.db.Order;
-import com.ilkayaktas.readingisgoodgetir.repository.OrderItemRepository;
 import com.ilkayaktas.readingisgoodgetir.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,12 +20,9 @@ public class OrderServiceImpl implements OrderService{
 
     private OrderRepository orderRepository;
 
-    private OrderItemRepository orderItemRepository;
-
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository, OrderItemRepository orderItemRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
-        this.orderItemRepository = orderItemRepository;
     }
 
     @Override
@@ -55,4 +52,11 @@ public class OrderServiceImpl implements OrderService{
         Optional<List<Order>> orderByDate = orderRepository.findOrderByDate(startDate, endDate);
         return orderByDate.orElse(List.of());
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<MonthlyOrderStatistics> getMonthlyStatistics(Long customerId){
+        return orderRepository.getMonthlyStatistics(customerId);
+    }
+
 }
