@@ -38,7 +38,7 @@ public class BookServiceImplTest {
 
 
     @Test
-    void addBook() {
+    public void addBook() {
 
         Book book1 = Book.builder()
                 .author("A1")
@@ -64,9 +64,10 @@ public class BookServiceImplTest {
     }
 
     @Test
-    void updateBookStock() {
+    public void updateBookStock() {
 
         Book book1 = Book.builder()
+                .id(10L)
                 .author("A1")
                 .name("B1")
                 .price(10.0)
@@ -75,13 +76,13 @@ public class BookServiceImplTest {
 
         Book bookRet = Book.builder()
                 .id(10L)
-                .author("A2")
-                .name("B2")
-                .price(12.0)
-                .stockCount(12)
+                .author("A1")
+                .name("B1")
+                .price(10.0)
+                .stockCount(10)
                 .build();
 
-        Mockito.when(bookRepository.findBookById(10L)).thenReturn(Optional.of(bookRet));
+        Mockito.when(bookRepository.findBookById(10L)).thenReturn(Optional.of(book1));
         Mockito.when(bookRepository.save(book1)).thenReturn(bookRet);
 
         Book res = bookService.updateBookStock(10L, 12);
@@ -94,7 +95,7 @@ public class BookServiceImplTest {
     }
 
     @Test
-    void getBook() {
+    public void getBook() {
         Book book1 = Book.builder()
                 .author("A1")
                 .name("B1")
@@ -104,10 +105,10 @@ public class BookServiceImplTest {
 
         Book bookRet = Book.builder()
                 .id(10L)
-                .author("A2")
-                .name("B2")
-                .price(12.0)
-                .stockCount(12)
+                .author("A1")
+                .name("B1")
+                .price(10.0)
+                .stockCount(10)
                 .build();
 
         Mockito.when(bookRepository.findBookById(10L)).thenReturn(Optional.of(bookRet));
@@ -122,7 +123,7 @@ public class BookServiceImplTest {
     }
 
     @Test
-    void getAllBooks() {
+    public void getAllBooks() {
 
         Book book1 = Book.builder()
                 .id(9L)
