@@ -24,6 +24,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation('org.springframework.boot:spring-boot-starter-validation')
+    implementation 'junit:junit:4.13.2'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
@@ -31,6 +32,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation('org.mockito:mockito-core:2.28.2')
 
     implementation('org.liquibase:liquibase-core')
 
@@ -49,6 +51,7 @@ dependencies {
     implementation 'javax.el:javax.el-api:3.0.0'
 }
 
-tasks.named('test') {
+
+test {
     useJUnitPlatform()
 }
