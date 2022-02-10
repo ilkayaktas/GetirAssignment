@@ -90,6 +90,13 @@ public class Order {
         } else if (!orderTime.equals(other.orderTime))
             return false;
 
+        if (totalPrice == null) {
+            if (other.totalPrice != null)
+                return false;
+        } else if (!totalPrice.equals(other.totalPrice))
+            return false;
+
+
         return true;
     }
 }
