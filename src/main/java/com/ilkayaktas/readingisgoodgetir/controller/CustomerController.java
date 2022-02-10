@@ -1,7 +1,9 @@
 package com.ilkayaktas.readingisgoodgetir.controller;
 
 import com.ilkayaktas.readingisgoodgetir.model.db.Customer;
+import com.ilkayaktas.readingisgoodgetir.model.db.Order;
 import com.ilkayaktas.readingisgoodgetir.model.mapper.CustomerMapper;
+import com.ilkayaktas.readingisgoodgetir.model.mapper.OrderMapper;
 import com.ilkayaktas.readingisgoodgetir.model.rest.RestCustomer;
 import com.ilkayaktas.readingisgoodgetir.model.rest.RestOrder;
 import com.ilkayaktas.readingisgoodgetir.service.customer.CustomerService;
@@ -65,9 +67,10 @@ public class CustomerController {
         } catch (NumberFormatException e){
             return new ResponseEntity("Customer id is not valid!",HttpStatus.BAD_REQUEST);
         }
-        orderService.getCustomersOrder(customerIdConverted);
-        System.out.println(customerId);
-        return null;
+        List<Order> customersOrder = orderService.getCustomersOrder(customerIdConverted);
+
+        List<RestOrder> collect = customersOrder.stream().map(OrderMapper.INSTANCE::toRestOrder).collect(Collectors.toList());
+        return ResponseEntity.ok(collect);
     }
 
 }
