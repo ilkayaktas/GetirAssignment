@@ -50,6 +50,12 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
+    public Book getBook(Long id) {
+        Optional<Book> bookById = bookRepository.findBookById(id);
+        return bookById.orElse(null);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<Book> getAllBooks() {
         Iterable<Book> all = bookRepository.findAll();

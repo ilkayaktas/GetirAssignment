@@ -1,6 +1,7 @@
 package com.ilkayaktas.readingisgoodgetir.service.order;
 
 import com.ilkayaktas.readingisgoodgetir.model.db.Order;
+import com.ilkayaktas.readingisgoodgetir.repository.OrderItemRepository;
 import com.ilkayaktas.readingisgoodgetir.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +20,12 @@ public class OrderServiceImpl implements OrderService{
 
     private OrderRepository orderRepository;
 
+    private OrderItemRepository orderItemRepository;
+
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, OrderItemRepository orderItemRepository) {
         this.orderRepository = orderRepository;
+        this.orderItemRepository = orderItemRepository;
     }
 
     @Override
@@ -33,8 +37,9 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     @Transactional
-    public Order createOrder(Order order) {
-        return orderRepository.save(order);
+    public Order saveOrder(Order order) {
+        Order ret = orderRepository.save(order);
+        return ret;
     }
 
     @Override

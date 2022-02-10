@@ -12,7 +12,7 @@ import java.util.List;
 public interface OrderService {
     List<Order> getCustomersOrder(Long customerId);
 
-    Order createOrder(Order order);
+    Order saveOrder(Order order);
 
     Order getOrder(Long orderId);
 

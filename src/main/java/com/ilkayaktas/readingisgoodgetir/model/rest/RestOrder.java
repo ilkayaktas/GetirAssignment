@@ -1,6 +1,5 @@
 package com.ilkayaktas.readingisgoodgetir.model.rest;
 
-import com.ilkayaktas.readingisgoodgetir.model.validator.OrderCountCriteria;
 import lombok.*;
 
 import javax.validation.Valid;
@@ -29,13 +28,3 @@ public class RestOrder {
     private List<RestOrderItem> items;
 }
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@Builder
-class RestOrderItem {
-    Long itemId;
-    @OrderCountCriteria(message = "Order count must be greater than zero!")
-    Integer itemCount;
-}

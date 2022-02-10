@@ -14,4 +14,6 @@ public interface BookService {
     List<Book> getAllBooks();
 
     Book updateBookStock(Long book, Integer countInt);
+
+    Book getBook(Long id);
 }

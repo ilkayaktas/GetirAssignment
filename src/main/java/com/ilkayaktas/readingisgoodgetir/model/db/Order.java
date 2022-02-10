@@ -5,13 +5,15 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ilkayaktas on 6.02.2022 at 01:04.
  */
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,6 +38,13 @@ public class Order {
     @NotNull
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     Customer customer;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JoinColumn(name="orderId", referencedColumnName="id")
+    List<OrderItem> orderItems = new ArrayList<>();
 
     @Override
     public int hashCode() {

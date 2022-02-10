@@ -40,4 +40,13 @@ public class GlobalExceptionHandler {
 
     return ResponseEntity.badRequest().body(collect);
   }
+
+  @ExceptionHandler(value = StockException.class)
+  public ResponseEntity<AbstractMap.SimpleEntry<String, String>> handleStockException(
+          HttpServletRequest request, StockException e) {
+
+    AbstractMap.SimpleEntry<String, String> response =
+            new AbstractMap.SimpleEntry<>("message", "Book stock is not available!");
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+  }
 }

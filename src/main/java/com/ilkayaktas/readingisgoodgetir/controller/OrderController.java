@@ -1,9 +1,11 @@
 package com.ilkayaktas.readingisgoodgetir.controller;
 
+import com.ilkayaktas.readingisgoodgetir.exceptions.StockException;
 import com.ilkayaktas.readingisgoodgetir.model.db.Order;
 import com.ilkayaktas.readingisgoodgetir.model.mapper.OrderMapper;
 import com.ilkayaktas.readingisgoodgetir.model.rest.RestOrder;
 import com.ilkayaktas.readingisgoodgetir.service.order.OrderService;
+import com.ilkayaktas.readingisgoodgetir.usecase.OrderUsecase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +28,19 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
+    @Autowired
+    OrderUsecase orderUsecase;
+
     @PostMapping("/add")
-    public ResponseEntity<RestOrder> createOrder(@RequestBody @Valid RestOrder restOrder){
-        return null;
+    public ResponseEntity<RestOrder> createOrder(@RequestBody @Valid RestOrder restOrder) throws StockException {
+
+        Order order = OrderMapper.INSTANCE.toOrder(restOrder);
+        Order result = orderUsecase.createOrder(order);
+
+        if (result == null){
+            ResponseEntity.badRequest();
+        }
+        return ResponseEntity.ok(OrderMapper.INSTANCE.toRestOrder(result));
     }
 
     @GetMapping("/get/{orderId}")
